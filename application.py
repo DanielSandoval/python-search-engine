@@ -77,9 +77,9 @@ class search_engine(object):
 
 	def more_repeated_word(self, word, count_page1, count_page2, url1, url2):
 		if count_page1 > count_page2:
-			print "This is the URL that contains more the word: %s" % url1
+			print "This is the URL that contains more the word: %s appears %s" % (url1, count_page1)
 		elif count_page2 > count_page1:
-			print "This is the URL that contains more the word: %s" % url2
+			print "This is the URL that contains more the word: %s appears %s" % (url2, count_page2)
 		message = raw_input("PRESS ENTER")
 
 	#Function 3
