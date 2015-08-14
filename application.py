@@ -30,7 +30,6 @@ class search_engine(object):
 	#Function 1
 	def option_menu_min(self, option_menu):
 		option_menu = option_menu.lower()
-		#option_menu = option_menu.upper()
 		return option_menu
 
 	#Function 2
@@ -50,8 +49,10 @@ class search_engine(object):
 
 	def option_search(self):
 		self.clean_screen()
-		word, url1, url2 = self.ask_word_url()
-		page_html1, page_html2 = self.open_page(url1, url2)
+		open_page = "Incorrect urls"
+		while open_page == "Incorrect urls":
+			word, url1, url2 = self.ask_word_url()
+			page_html1, page_html2 = self.open_page(url1, url2)
 		count_page1 = self.count_page1(word, page_html1)
 		count_page2 = self.count_page2(word, page_html2)
 		more_repeated_word = self.more_repeated_word(word, count_page1, count_page2, url1, url2)
@@ -71,6 +72,7 @@ class search_engine(object):
 			return page_html1, page_html2
 		except ValueError:
 			print "You didn't type correctly one or both URLs"
+			return "Opened incorrectly"
 
 	#Function 3
 	def count_page1(self, word, page_html1):
@@ -81,6 +83,11 @@ class search_engine(object):
 	def count_page2(self, word, page_html2):
 		count_page2 = page_html2.count(word)
 		return count_page2
+
+	#Function 5
+	def verify_count_word():
+		if type(count_page1) == int and type(count_page2) == int:
+			return
 
 	def more_repeated_word(self, word, count_page1, count_page2, url1, url2):
 		if count_page1 > count_page2:
