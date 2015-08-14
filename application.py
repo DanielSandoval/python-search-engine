@@ -30,6 +30,7 @@ class search_engine(object):
 	#Function 1
 	def option_menu_min(self, option_menu):
 		option_menu = option_menu.lower()
+		#option_menu = option_menu.upper()
 		return option_menu
 
 	#Function 2
@@ -62,25 +63,14 @@ class search_engine(object):
 		return word, url1, url2
 
 	def open_page(self, url1, url2):
-		page1 = urllib2.urlopen(url1)
-		page_html1 = page1.read()
-		page2 = urllib2.urlopen(url2)
-		page_html2 = page2.read()
-		return page_html1, page_html2
-
-	def search_word(self, word, page_html1, page_html2):
-		if word in page_html1:
-			count_page1 = self.count_page1(word, page_html1)
-		if word in page_html2:
-			count_page2 = self.count_page2(word, page_html2)
-		return count_page1, count_page2
-
-	def more_repeated_word(self, word, count_page1, count_page2, url1, url2):
-		if count_page1 > count_page2:
-			print "This is the URL that contains more the word: %s appears %s" % (url1, count_page1)
-		elif count_page2 > count_page1:
-			print "This is the URL that contains more the word: %s appears %s" % (url2, count_page2)
-		message = raw_input("PRESS ENTER")
+		try:
+			page1 = urllib2.urlopen(url1)
+			page_html1 = page1.read()
+			page2 = urllib2.urlopen(url2)
+			page_html2 = page2.read()
+			return page_html1, page_html2
+		except ValueError:
+			print "You didn't type correctly one or both URLs"
 
 	#Function 3
 	def count_page1(self, word, page_html1):
@@ -91,6 +81,15 @@ class search_engine(object):
 	def count_page2(self, word, page_html2):
 		count_page2 = page_html2.count(word)
 		return count_page2
+
+	def more_repeated_word(self, word, count_page1, count_page2, url1, url2):
+		if count_page1 > count_page2:
+			print "THIS IS THE URL THAT CONTAINS MORE THE WORD: ---> %s <--- APPEARS %s TIMES" % (url1, count_page1)
+		elif count_page2 > count_page1:
+			print "THIS IS THE URL THAT CONTAINS MORE THE WORD: ---> %s <--- APPEARS %s TIMES" % (url2, count_page2)
+		elif count_page1 == 0 and count_page2 == 0:
+			print "The word you are searching is not in any page"
+		message = raw_input("PRESS ENTER")
 
 	def clean_screen(self):
 		os.system('reset')
