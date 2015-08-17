@@ -15,11 +15,11 @@ class Test_Search_Engine(unittest.TestCase):
 	#Function 3: count_page1
 	def test_count_page1(self):
 		class_application = application.search_engine()
-		self.assertTrue(type(class_application.count_page1("Python", "https://es.wikipedia.org/wiki/Python")) == int)
-	#Function 3: count_page2
+		self.assertTrue(type(class_application.count_page1("Python", "https://en.wikipedia.org/wiki/Python_(programming_language)")) == int)
+	#Function 4: count_page2
 	def test_count_page2(self):
 		class_application = application.search_engine()
-		self.assertTrue(type(class_application.count_page2("Python", "https://es.wikipedia.org/wiki/Lenguaje_de_programaci%C3%B3n")) == int)
+		self.assertTrue(type(class_application.count_page2("Python", "https://es.wikipedia.org/wiki/Python")) == int)
 
 if __name__ == '__main__':
 	unittest.main()

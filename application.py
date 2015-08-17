@@ -4,6 +4,7 @@ import os
 import sys
 import urllib2
 import re
+import urlparse
 
 class search_engine(object):
 	"""docstring for ClassName"""
@@ -19,8 +20,8 @@ class search_engine(object):
 			self.menu_decision(menu_option)
 		
 	def menu_print(self):
-		print "SEARCH WORD"
-		print "EXIT"
+		print "1.SEARCH WORD"
+		print "2.EXIT"
 
 	def menu_option(self):
 		option_menu = raw_input("Type the option you want: ")
@@ -49,10 +50,12 @@ class search_engine(object):
 
 	def option_search(self):
 		self.clean_screen()
-		open_page = "Incorrect urls"
-		while open_page == "Incorrect urls":
+		verify_urls = "Incorrect urls"
+		while verify_urls == "Incorrect urls":
 			word, url1, url2 = self.ask_word_url()
-			page_html1, page_html2 = self.open_page(url1, url2)
+			page_html1 = self.open_page1(url1, url2)
+			page_html2 = self.open_page2(url1, url2)
+			verify_urls = self.verify_urls(page_html1, page_html2)
 		count_page1 = self.count_page1(word, page_html1)
 		count_page2 = self.count_page2(word, page_html2)
 		more_repeated_word = self.more_repeated_word(word, count_page1, count_page2, url1, url2)
@@ -63,16 +66,32 @@ class search_engine(object):
 		url2 = raw_input("Type the second URL: ")
 		return word, url1, url2
 
-	def open_page(self, url1, url2):
+	def open_page1(self, url1, url2):
 		try:
 			page1 = urllib2.urlopen(url1)
 			page_html1 = page1.read()
+			return page_html1
+		except ValueError:
+			message = raw_input("You didn't type correctly the first URL")
+			return "Incorrect url"
+
+	def open_page2(self, url1, url2):
+		try:
 			page2 = urllib2.urlopen(url2)
 			page_html2 = page2.read()
-			return page_html1, page_html2
+			return page_html2
 		except ValueError:
-			print "You didn't type correctly one or both URLs"
-			return "Opened incorrectly"
+			message = raw_input("You didn't type correctly the second URL")
+			return "Incorrect url"
+
+	def verify_urls(self, page_html1, page_html2):
+		if page_html1 == "Incorrect url" or page_html2 == "Incorrect url":
+			verify_urls = "Incorrect urls"
+			message = raw_input("You need type again the information!!!")
+			self.clean_screen()
+			return verify_urls
+		else:
+			return "Correct urls"
 
 	#Function 3
 	def count_page1(self, word, page_html1):
@@ -83,11 +102,6 @@ class search_engine(object):
 	def count_page2(self, word, page_html2):
 		count_page2 = page_html2.count(word)
 		return count_page2
-
-	#Function 5
-	def verify_count_word():
-		if type(count_page1) == int and type(count_page2) == int:
-			return
 
 	def more_repeated_word(self, word, count_page1, count_page2, url1, url2):
 		if count_page1 > count_page2:
