@@ -4,7 +4,6 @@ import os
 import sys
 import urllib2
 import re
-import urlparse
 
 class search_engine(object):
 	"""docstring for ClassName"""
@@ -20,8 +19,8 @@ class search_engine(object):
 			self.menu_decision(menu_option)
 		
 	def menu_print(self):
-		print "1.SEARCH WORD"
-		print "2.EXIT"
+		print "SEARCH WORD"
+		print "EXIT"
 
 	def menu_option(self):
 		option_menu = raw_input("Type the option you want: ")
@@ -68,10 +67,18 @@ class search_engine(object):
 
 	def open_page1(self, url1, url2):
 		try:
+			#url1 = "http://%s" % url1
 			page1 = urllib2.urlopen(url1)
 			page_html1 = page1.read()
 			return page_html1
 		except ValueError:
+			#try:
+				#url1 = "http://%s" % url1
+				#page1 = urllib2.urlopen(url1)
+				#page_html1 = page1.read()
+				##page_html1 = self.open_page1(url1, url2)
+				#return page_html1
+			#except ValueError:
 			message = raw_input("You didn't type correctly the first URL")
 			return "Incorrect url"
 
@@ -108,6 +115,8 @@ class search_engine(object):
 			print "THIS IS THE URL THAT CONTAINS MORE THE WORD: ---> %s <--- APPEARS %s TIMES" % (url1, count_page1)
 		elif count_page2 > count_page1:
 			print "THIS IS THE URL THAT CONTAINS MORE THE WORD: ---> %s <--- APPEARS %s TIMES" % (url2, count_page2)
+		elif count_page1 == count_page2 and count_page1 != 0 and count_page2 != 0:
+			print "The word is repeated the same quatity of times in both pages"
 		elif count_page1 == 0 and count_page2 == 0:
 			print "The word you are searching is not in any page"
 		message = raw_input("PRESS ENTER")
