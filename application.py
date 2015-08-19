@@ -84,7 +84,7 @@ class search_engine(object):
 			page2 = urllib2.urlopen(url2)
 			page_html2 = page2.read()
 			return page_html2
-		except ValueError:
+		except:
 			try:
 				url2 = "http://%s" % url2
 				page_html2 = self.open_page2(url2)
